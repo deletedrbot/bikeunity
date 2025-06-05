@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Карта маршрутов | Bike Unity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 90vh;
+      width: 100%;
+      margin: 20px auto;
+      border: 2px solid #ff5500;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Карта маршрутов</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="trips.html">Поездки</a>
+      <a href="community.html">Сообщество</a>
+      <a href="gallery.html">Галерея</a>
+      <a href="map.html" class="active">Карта</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="map"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Bike Unity</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([52.0, 113.5], 12); // Центр карты (можно изменить)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
+
+    // Пример маршрутов
+    const routes = [
+      {
+        name: 'Маршрут 1: Лесной',
+        coords: [[52.010, 113.480], [52.020, 113.500], [52.015, 113.530]],
+        color: '#ff5500',
+      },
+      {
+        name: 'Маршрут 2: Горы',
+        coords: [[52.000, 113.490], [52.005, 113.525], [52.015, 113.540]],
+        color: '#00aaff',
+      },
+    ];
+
+    routes.forEach(route => {
+      L.polyline(route.coords, { color: route.color, weight: 4 }).addTo(map)
+        .bindPopup(route.name);
+    });
+  </script>
+</body>
+</html>
