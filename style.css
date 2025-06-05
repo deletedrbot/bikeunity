@@ -1,21 +1,56 @@
+<!-- Общие стили: style.css -->
 body {
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background-color: #ffffff;
-  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  background: #111;
+  color: #eee;
+  padding: 20px;
+}
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+nav a {
+  margin: 0 10px;
+  color: #f50;
+  text-decoration: none;
+  font-weight: bold;
+}
+.hero {
+  text-align: center;
+  padding: 60px;
+  background: linear-gradient(#222, #111);
+}
+.button {
+  background: #f50;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  display: inline-block;
+  margin-top: 20px;
+}
+.trip, .profile {
+  background: #222;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px;
+  border: 2px solid #f50;
+  border-radius: 8px;
+}
+.gallery img {
+  width: 300px;
+  margin: 10px;
+  border: 2px solid #f50;
+  border-radius: 8px;
+}
+.profiles {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
 }
-
-header, footer {
-  background-color: #f0f0f0;
-  text-align: center;
-  padding: 1em;
-}
-
-main {
-  flex: 1;
-  padding: 2em;
+section {
+  max-width: 960px;
+  margin: 0 auto;
 }
