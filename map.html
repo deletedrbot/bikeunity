@@ -14,6 +14,34 @@
       border: 2px solid #ff5500;
       border-radius: 12px;
     }
+
+    #controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    input[type="file"] {
+      background: #111;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #ff5500;
+    }
+
+    button {
+      background: #ff5500;
+      border: none;
+      padding: 6px 12px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff2200;
+    }
   </style>
 </head>
 <body>
@@ -30,6 +58,10 @@
   </header>
 
   <main>
+    <div id="controls">
+      <input type="file" id="gpxFile" accept=".gpx" />
+      <button id="locateBtn">Где я?</button>
+    </div>
     <div id="map"></div>
   </main>
 
@@ -37,12 +69,17 @@
     <p>&copy; 2025 Bike Unity</p>
   </footer>
 
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    const map = L.map('map').setView([52.0, 113.5], 12); // Центр карты (можно изменить)
+  <!-- leaflet-gpx parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.5.1/gpx.min.js"></script>
 
+  <script>
+    const map = L.map('map').setView([52.0, 113.5], 12);
+
+    // Карта OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
     // Пример маршрутов
@@ -62,6 +99,47 @@
     routes.forEach(route => {
       L.polyline(route.coords, { color: route.color, weight: 4 }).addTo(map)
         .bindPopup(route.name);
+    });
+
+    // Загрузка GPX-файла
+    document.getElementById('gpxFile').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const gpxData = event.target.result;
+        const gpxLayer = new L.GPX(gpxData, {
+          async: true,
+          marker_options: {
+            startIconUrl: null,
+            endIconUrl: null,
+            shadowUrl: null
+          },
+          polyline_options: {
+            color: '#00ff88',
+            weight: 4,
+          }
+        }).on('loaded', function (e) {
+          map.fitBounds(e.target.getBounds());
+        }).addTo(map);
+      };
+      reader.readAsText(file);
+    });
+
+    // Текущее местоположение
+    document.getElementById('locateBtn').addEventListener('click', function () {
+      map.locate({ setView: true, maxZoom: 15 });
+
+      map.once('locationfound', function (e) {
+        L.marker(e.latlng).addTo(map)
+          .bindPopup('Вы здесь!')
+          .openPopup();
+      });
+
+      map.once('locationerror', function (e) {
+        alert('Невозможно определить местоположение.');
+      });
     });
   </script>
 </body>
