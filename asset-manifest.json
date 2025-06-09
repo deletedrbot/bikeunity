@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/bike-unity/static/css/main.14252de7.css",
+    "main.js": "/bike-unity/static/js/main.cacc0bc5.js",
+    "index.html": "/bike-unity/index.html",
+    "main.14252de7.css.map": "/bike-unity/static/css/main.14252de7.css.map",
+    "main.cacc0bc5.js.map": "/bike-unity/static/js/main.cacc0bc5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.14252de7.css",
+    "static/js/main.cacc0bc5.js"
+  ]
+}
